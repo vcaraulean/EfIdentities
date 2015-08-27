@@ -1,7 +1,5 @@
 ﻿using System;
 using System.Collections.Generic;
-using System.ComponentModel.DataAnnotations;
-using System.ComponentModel.DataAnnotations.Schema;
 
 namespace EfIdentities
 {
@@ -12,7 +10,6 @@ namespace EfIdentities
             Lines = new List<OrderLine>();
         }
 
-        [Key]
         public virtual int Id { get; set; }
         public DateTime Created { get; set; }
 
@@ -21,12 +18,10 @@ namespace EfIdentities
 
     public class OrderLine
     {
-        [Key, Column(Order = 0), DatabaseGenerated(DatabaseGeneratedOption.Identity)]
         public int Id { get; set; }
-        [Key, Column(Order = 1)]
         public int OrderId { get; set; }
 
-        public virtual Order Order { get; set; }
+        public Order Order { get; set; }
 
         public string Product { get; set; }
     }

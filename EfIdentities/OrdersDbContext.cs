@@ -1,4 +1,5 @@
-﻿using System.Data.Entity;
+﻿using System.ComponentModel.DataAnnotations.Schema;
+using System.Data.Entity;
 
 namespace EfIdentities
 {
@@ -13,5 +14,20 @@ namespace EfIdentities
 
         public DbSet<Order> Orders { get; set; }
         public DbSet<OrderLine> OrderLines { get; set; }
+
+        protected override void OnModelCreating(DbModelBuilder modelBuilder)
+        {
+            base.OnModelCreating(modelBuilder);
+
+            modelBuilder
+                .Entity<OrderLine>()
+                .HasKey(x => new {x.Id, x.OrderId})
+                .Property(x => x.Id).HasDatabaseGeneratedOption(DatabaseGeneratedOption.Identity);
+
+            modelBuilder
+                .Entity<Order>()
+                .HasKey(x => x.Id)
+                .HasMany(x => x.Lines);
+        }
     }
 }
