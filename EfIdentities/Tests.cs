@@ -18,23 +18,7 @@ namespace EfIdentities
         [Fact]
         public void CanSaveAnOrderWithOneLine()
         {
-            var order = new Order
-            {
-                Created = DateTime.Now,
-                Lines = new List<OrderLine>
-                {
-                    new OrderLine
-                    {
-                        Product = "something"
-                    }
-                }
-            };
-
-            using (var db = new OrdersDbContext())
-            {
-                db.Orders.Add(order);
-                db.SaveChanges();
-            }
+            CreateSingleOrder();
 
             using (var db = new OrdersDbContext())
             {
@@ -57,6 +41,20 @@ namespace EfIdentities
                 
                 Assert.Equal(2, dbOrder.Lines.Count);
             }
+        }
+
+        [Fact]
+        public void CanCreateMultipleOrdersWithDifferentLines()
+        {
+            CreateSingleOrder();
+            CreateOrderWithTwoLines();
+
+            using (var db = new OrdersDbContext())
+            {
+                Assert.Equal(2, db.Orders.Count());
+                Assert.Equal(3, db.OrderLines.Count());
+            }
+
         }
 
         [Fact]
@@ -113,6 +111,27 @@ namespace EfIdentities
                     new OrderLine
                     {
                         Product = "anything"
+                    }
+                }
+            };
+
+            using (var db = new OrdersDbContext())
+            {
+                db.Orders.Add(order);
+                db.SaveChanges();
+            }
+        }
+
+        private static void CreateSingleOrder()
+        {
+            var order = new Order
+            {
+                Created = DateTime.Now,
+                Lines = new List<OrderLine>
+                {
+                    new OrderLine
+                    {
+                        Product = "something"
                     }
                 }
             };

@@ -11,7 +11,7 @@ namespace EfIdentities.Migrations
                 "dbo.OrderLines",
                 c => new
                     {
-                        Id = c.Int(nullable: false),
+                        Id = c.Int(nullable: false, identity: true),
                         OrderId = c.Int(nullable: false),
                         Product = c.String(),
                     })

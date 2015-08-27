@@ -21,9 +21,9 @@ namespace EfIdentities
 
     public class OrderLine
     {
-        [Key, Required, Column(Order = 0), DatabaseGenerated(DatabaseGeneratedOption.Identity)]
+        [Key, Column(Order = 0), DatabaseGenerated(DatabaseGeneratedOption.Identity)]
         public int Id { get; set; }
-        [Key, ForeignKey("Order"), Column(Order = 1)]
+        [Key, Column(Order = 1)]
         public int OrderId { get; set; }
 
         public virtual Order Order { get; set; }
